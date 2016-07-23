@@ -85,12 +85,7 @@
 							$header.css('background-position', 'left 0px');
 
 							$window.on('scroll.strata_parallax', function() {
-								// código agregado:
-                                $header.css('background-position', 'left 0px');
-                                // código original:
-                                /*
                                 $header.css('background-position', 'left ' + (-1 * (parseInt($window.scrollTop()) / settings.parallaxFactor)) + 'px');
-                                */
 							});
 
 						}
