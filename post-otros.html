@@ -43,8 +43,199 @@
 				<!-- Two -->
 					<article id="two">
 						<span class="image fit"><img src="images/fulls/05.jpg" alt="" /></span>
-		                <p>Aquí va el contenido del post</p>
-		                
+                    
+                    
+
+<p>Profesor: Miguel Nieva | Twitter: <a href="https://twitter.com/mikenieva" target="_blank">@mikenieva</a> |
+<a href="http://git.miguelnieva.com/#/" target="_blank">Documentación del curso.</a></p>
+
+<h2>BARE REPOSITORIES</h2>
+
+<p>Son repositorios simples y propios que no tiene Working Directory ni Staging Area, solo el repo con las ramas.</p>
+
+<p>Generalmente se instala en una carpeta del servidor y ahí se guarda el proyecto GIT, desde local se sube ahí todo con Push. Por último se clona desde este Bare Repo a una carpeta del servidor los ficheros del propio proyecto web, esto se llama "desplegar el proyecto" o ·"Deployment".</p>
+
+<p>A los Bare Repos básicamente solo se puede hacer Push, Pull y Clone.</p>
+
+<p>Github realmente es un Bare Repo, solo que con la interface visual muestra todo el histórico del proyecto.</p>
+
+<p><strong>Comandos</strong></p>
+
+<p>En el server creamos bare repo</p>
+
+<pre><code>$ git init --bare nombreRepo.git
+</code></pre>
+
+<p>En local clonamos del server</p>
+
+<pre><code>$ git clone SSH_de_servidor_BareRepo:ruta_de_BareRepo/nombreRepo.git nombreRepoClonada
+</code></pre>
+
+<p>NOTA  la ruta del Bare Repo es relativa a la carpeta en la que la conexión te posiciona al conectarte, p.e., Hostsuar te posiciona en el usuario (~/) y las webs están en: ~/public_html/carpetaDominio/</p>
+
+<p>Trabajamos en local</p>
+
+<p>Hacemos un push</p>
+
+<pre><code>$ git push origin master
+</code></pre>
+
+<p>Desde server desplegamos en una carpeta el proyecto git</p>
+
+<pre><code>$ git clone ruta_del_repo.git ruta_de_destino
+</code></pre>
+
+<p>La ruta_de_destino es la carpeta donde se guardarán los ficheros de la web</p>
+
+<p>A partir de aquí, luego de algún push de local, hacemos pull desde el server:</p>
+
+<pre><code>$ git pull origin master
+</code></pre>
+
+<h2>GIT TAGS</h2>
+
+<p><a href="http://miguelnieva.github.io/presentacion-workshop-3/#/">Git Tags</a></p>
+
+<p>Especificar momentos de tu repositorio importantes, generalmente versiones del proyecto, un feature complejo, etc.</p>
+
+<p>Un TAG es un commit "abanderado"</p>
+
+<p>Existen 2 formas de crear tags. </p>
+
+<ul>
+<li>Annotated Tags </li>
+<li>Lightweight Tags</li>
+</ul>
+
+<p><strong>Annotated Tag</strong>: Agregas la versión y un mensaje para agregar, al ejecutarlo se agrega el TAG al COMMIT donde está ubicado el HEAD.</p>
+
+<pre><code>$ git tag -a [versión] -m "[mensaje]"
+$ git tag -a v1.0 -m "Navegación completada"
+</code></pre>
+
+<p>Muestra listado de tags creados.</p>
+
+<pre><code>$ git tag
+</code></pre>
+
+<p>Busca la versión que le solicites.</p>
+
+<pre><code>$ git tag -l "[versión]"
+</code></pre>
+
+<p>Mover el HEAD a un commit por nombre de tag</p>
+
+<pre><code>$ git checkout [versión]
+</code></pre>
+
+<p>Poner tag a un commit ya creado:</p>
+
+<pre><code>// Opción 1: navegar hasta el commit y ponerle tag normal:
+(168dc2d)$ git tag -a [versión] -m "[mensaje]"
+
+// Opción 2: comando normal pero al final ponemos el ID del commit: 
+(master)$ git tag -a [versión] -m "[mensaje]" 168dc2d
+</code></pre>
+
+<p><strong>Lightweight Tags</strong>: solo se indica el nombre del tag sin -a</p>
+
+<pre><code>$ git tag [versión]
+$ git tag v1.0
+</code></pre>
+
+<h2>GIT EXTRAS</h2>
+
+<p>Es una Extensión de GIT para tener más comandos.</p>
+
+<p><a href="https://github.com/tj/git-extras">Git Extras</a></p>
+
+<ul>
+<li>Tener <a href="https://github.com/git-for-windows/git/releases">Git for Windows</a> instalado.</li>
+<li>Clonar repo de <a href="https://github.com/tj/git-extras">git-extras</a> en cualquier directorio.</li>
+</ul>
+
+<pre><code>$ git clone https://github.com/tj/git-extras.git
+# checkout the latest tag (optional)
+$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))
+</code></pre>
+
+<p>Por último, ejecutar <strong>install.cmd</strong> desde la consola cmd.</p>
+
+<p>NOTA:  Todavía no lo he probado</p>
+
+<h2>GIT GUI</h2>
+
+<p>Interfaces gráficas de GIT en Windows:</p>
+<p><a href="https://www.sourcetreeapp.com/">SourceTree</a></p>
+<p><a href="https://desktop.github.com/">Github Desktop</a></p>
+
+<h2>ZENHUB</h2>
+
+<p>Aplicación para Proyect Management más completo y de manera nativa desde Github.</p>
+
+<p><a href="https://www.zenhub.com/">ZenHub</a></p>
+
+<p>Es una extensión al navegador y que da funcionalidades adicionales dentro de Github web.</p>
+
+<p><strong>Pestaña Boards</strong></p>                        
+<p>Son columnas (pipes) con nombres que simulan el estado del proyecto: 
+New Issues(nuevos), Icebox(ideas), Backlog(prioritarios), In Progress(trabajando), Review(revisión), Done(finalizado), ya puedes agregar más pipes.</p>
+
+<p><strong>Epics</strong></p>                        
+<p>
+Agrega un nivel más de agrupamiento de Issues. Puedes agrupar Issues relacionados dentro de Milestone, por lo que te puede quedar: Proyecto &gt;&gt; Milestone &gt;&gt; Epics &gt;&gt; Issues</p>
+
+<p><strong>Pestaña Burndown</strong></p>                        
+<p>
+Muestra una gráfica del tiempo total de gestión del proyecto.</p>
+
+<h2>GITLAB</h2>
+
+<p>Instala toda una comunidad como Github en tu servidor, con interface gráfica.</p>
+
+<p><a href="https://about.gitlab.com/">GitLab</a></p>
+
+<p>Los términos cambian un poco:</p>
+<table class="alt">
+   <thead>
+    <tr>
+        <th>GIT HUB</th>
+        <th>GIT LAB </th>
+        <th>Que significa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Pull Request</td>
+        <td>Merge Request</td>
+        <td>Petición de Fusión</td>
+    </tr>
+    <tr>
+        <td>Gist</td>
+        <td>Snippet</td>
+        <td>"Pedazos" de código</td>
+    </tr>
+    <tr>
+        <td>Repository</td>
+        <td>Project</td>
+        <td>"Repo" de Git</td>
+    </tr>
+    <tr>
+        <td>Organizations</td>
+        <td>Groups</td>
+        <td>"Group-Level" Management</td>
+    </tr>
+    </tbody>
+</table>
+ 
+ 
+
+</article>
+                    
+                        
+                        
+                        
+                        
                         <ul class="actions">
                                 <li><a href="index.html" class="button special small">Inicio</a></li>
                         </ul>
