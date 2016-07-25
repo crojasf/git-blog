@@ -3,7 +3,7 @@
 
 ## Descripción
 
-Este mini Blog Personal está creado para practicar tolo lo aprendido en el Curso Profesional de Git y Github de [Plazti](https://platzi.com/clases/git-github).
+Este mini Blog Personal está creado para practicar todo lo aprendido en el Curso Profesional de Git y Github de [Plazti](https://platzi.com/clases/git-github).
 
 Trataré de aplicar todo lo aprendido: git, add, commit, branch, remote, fetch, merge, push, pull, repositorios, Github, Github pages, colaboración, Proyect Management, milestones, issues, etc.
 
