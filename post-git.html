@@ -1,0 +1,674 @@
+<!DOCTYPE HTML>
+<!--
+	Strata by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Blog en Github de Carlos Rojas Falcone - Comandos principales de GIT</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<meta name="description" content="Este es un Blog personal en Git donde dejaré reflejado lo aprendido en el Curso profesional de Git y Github en Plazti.">
+		<meta name="keywords" content="blog personal, GIT, Github, Curso profesional, Platzi, Carlos Rojas, Desarrollo web">
+		<meta name="author" content="Carlos Rojas Falcone">
+		
+	</head>
+	<body id="top">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="#" class="image avatar"><img src="images/avatar.png" alt="" /></a>
+				<h1>Hola, soy <strong>Carlos Rojas</strong>, un Desarrollador Web Freelance que está aprendiendo a utilizar GIT gracias a <a href="https://platzi.com/clases/git-github/">Platzi</a>.</h1>
+			</header>
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- One -->
+					<section id="one">
+						<header class="work-item">
+							<h2>Comandos principales de GIT</h2>
+                            <p>
+                                Creado por <a href="http://github.com/crojasf/" target="_blank">Carlos Rojas</a> el  
+                                <time datetime="2016-07-25">25 Julio 2016</time>
+                            </p>
+                            <hr>
+						</header>
+					</section>
+					
+				<!-- Two -->
+					<article id="two">
+		                
+						<span class="image fit"><img src="images/fulls/01.jpg" alt="" /></span>
+<p>Profesor: Miguel Nieva | Twitter: <a href="https://twitter.com/mikenieva" target="_blank">@mikenieva</a> |
+<a href="http://git.miguelnieva.com/#/" target="_blank">Documentación del curso.</a></p>
+
+<h2>ESTRUCTURA DE ARBOL</h2>
+
+<p>
+ <ol>
+     <li>Working Directory (mi disco duro donde trabajo)</li>
+     <li>Staging área (preparación para subir al repositorio)</li>
+     <li>Repository local (lugar donde se guarda el proyecto, y se sube haciendo "commit")</li>
+ </ol>
+</p>
+
+<h3>Conceptos</h3>
+
+<ul>
+    <li><strong>origin</strong>: Nombre de la conexión con mi Repositorio Remoto de Github.</li>
+    <li><strong>upstream</strong>: Nombre de la conexión remota con el Repositorio principal al cual yo hice Fork en Github.</li>
+    <li><strong>master</strong>: Nombre de la rama principal de cualquier proyecto.</li>
+    <li><strong>rama1</strong>: Se pueden crear nuevas ramas con el nombre que se quiera.</li>
+    <li><strong>origin/master</strong>: Es la rama master “espejo” del Repositorio Remoto descargado en mi Repositorio Local, es un repositorio intermedio entre la rama master del remoto con la rama master de local.</li>
+    <li><strong>upstream/master</strong>: Lo mismo que “origin/master” del Repositorio Remoto Principal.</li>
+    <li><strong>origin/rama2</strong>: Lo mismo que “origin/master” pero para cualquier otra rama de mi Repositorio Remoto.</li>
+</ul>
+
+<h2>VERIFICAR INSTALACION, CONFIG BASICA y HELP</h2>
+
+<h3>Mostrar versión instalada</h3>
+
+<pre><code>$ git --version
+</code></pre>
+
+<h3>Configuración básica</h3>
+
+<pre><code>$ git config --global user.name "TU NOMBRE"
+$ git config --global user.email "TU CORREO DE GITHUB"
+$ git config --global --list
+</code></pre>
+
+<h3>Buscar ayuda de cualquier comando</h3>
+
+<pre><code>$ git help [comando a buscar]
+</code></pre>
+
+<h2>COMANDOS</h2>
+
+<ul>
+<li>git add</li>
+<li>git branch</li>
+<li>git checkout</li>
+<li>git clean</li>
+<li>git clone</li>
+<li>git commit</li>
+<li>git commit -- amend</li>
+<li>git config</li>
+<li>git fetch</li>
+<li>git init</li>
+<li>git log</li>
+<li>git merge</li>
+<li>git pull</li>
+<li>git push</li>
+<li>git rebase</li>
+<li>git reflog</li>
+<li>git remote</li>
+<li>git reset</li>
+<li>git revert</li>
+<li>git status</li>
+</ul>
+
+<h2>HERRAMIENTAS</h2>
+
+<ul>
+<li>git extras</li>
+<li>GitLab</li>
+<li>Zenhub.io</li>
+</ul>
+
+<h2>HEAD</h2>
+
+<p>Es el puntero que indica en qué commit y rama que estoy posicionado actualmente, siempre que hago un commit, el HEAD se ubica en ese nuevo commit.</p>
+
+<h2>COMMITS</h2>
+
+<p>Todo commit tiene los siguientes datos principales:</p>
+
+<ul>
+<li>Commit ID (código hexagesimal SHA-1)</li>
+<li>Parent: el commit de donde proviene este commit</li>
+<li>Autor</li>
+<li>Fecha</li>
+</ul>
+
+<p>Todos los commits son SECUENCIALES, no se puede borrar un commit intermedio, solo se puede borrar donde estas en adelante.</p>
+
+<h3>Crear un commit</h3>
+
+<pre><code>$ git commit -m "[Mensaje]"
+</code></pre>
+
+
+<h3>Crear un commit sin pasar por "add"</h3>
+
+<pre><code>$ git commit -am "[Mensaje]"
+</code></pre>
+
+
+<h3>Modificar el último commit</h3>
+
+<p>En un solo comando se realiza add y commit</p>
+
+<pre><code>$ git commit -am "[NuevoMensaje]" --amend
+</code></pre>
+
+
+
+<h2>CHECKOUT</h2>
+
+<p>Sirve para "moverse" entre commits, ramas o tags.</p>
+
+<pre><code>$ git checkout [SHA commit]
+</code></pre>
+
+
+<p>Luego de movernos a una parte del proyecto, SIEMPRE hay que regresar donde estábamos trabajando.</p>
+
+<h2>GIT WORKFLOW</h2>
+
+<h3>Iteración Básica</h3>
+
+<p><strong>git add</strong> &gt;&gt; agregamos cambios de Working area a Staging area</p>
+<p><strong>git commit</strong> &gt;&gt; agregamos cambios de Staging area a Repository Local</p>
+
+<pre><code>// Agrega los cambios al Staging Area
+$ git add [file or directory]
+
+// Crea un commit para subir los cambios al Repositorio
+$ git commit -m "[Mensaje]"
+
+// Muestra el estado actual del proyecto
+$ git status
+</code></pre>
+
+
+<h3>Workflow básico de ramas de Github</h3>
+
+<p>Github utiliza la siguiente estructura de ramas básica para cualquier proyecto (Workflow): </p>
+
+<ul>
+<li><strong>Principal</strong>: es la rama master donde se subirán todos los releases (recomendado tags)</li>
+<li><strong>Bugs o Hotfixes</strong>: rama para hacer correcciones rápidas directamente a master.</li>
+<li><strong>Releases</strong>: rama donde se guardan los desarrollos terminados antes de subirlos a master (recomendado tags)</li>
+<li><strong>Desarrollo</strong>: rama para recopilar todos los desarrollos (features) terminados.</li>
+<li><strong>Features</strong>: puede ser una o varias ramas utilizadas para cada parte del desarrollo.</li>
+</ul>
+
+<h2>REINICIAL PROYECTO LOCAL</h2>
+
+<p>Borrar subcarpeta .git dentro de carpeta del proyecto.</p>
+
+<h2>PASOS BASICOS DE GIT</h2>
+
+<ul>
+<li><p>Entrar por consola a la carpeta de mi proyecto.</p></li>
+<li><p>Iniciar un repositorio en git</p></li>
+</ul>
+
+<pre><code>$ git init
+</code></pre>
+
+<ul>
+<li>Muestra el estado de los archivos del directorio respecto a los archivos rastreados que están listos para hacerles commit.</li>
+</ul>
+
+<pre><code>$ git status
+</code></pre>
+
+<ul>
+<li>Subir a Standing Area los ficheros o carpetas con comando "add", parámetro -A es para que suba todo, o si se pone el nombre del fichero hará commit solo de ese fichero</li>
+</ul>
+
+<pre><code>$ git add -A
+$ git add favicon.ico
+</code></pre>
+
+<ul>
+<li>Subir al repositorio local con comando "commit", se agrega parámetro "-m" y un mensaje entre comillas.</li>
+</ul>
+
+<pre><code>$ git commit -m "comentario_del_commit"
+</code></pre>
+
+<p>NOTA: se puede hacer “add –A” + “commit –m” con el parámetro “-am”:</p>
+
+<pre><code>$ git commit -am "comentario_del_commit"
+</code></pre>
+
+<h2>LOG</h2>
+
+<h3>Comandos</h3>
+
+<ul>
+<li><strong>git log --oneline</strong> &gt;&gt; muestra el log una sola línea.</li>
+<li><strong>git log --decorate</strong> &gt;&gt; indica en que commit está HEAD.</li>
+<li><strong>git log --stat</strong> &gt;&gt; muestra los cambios a nivel de ficheros que se realizaron.</li>
+<li><strong>git log --p</strong> &gt;&gt; muestra los cambios que se realizaron.</li>
+<li><strong>git shortlog</strong> &gt;&gt; muestra los autores y sus commits.</li>
+<li><strong>git log --graph --online --decorate</strong> &gt;&gt; muestra los asteriscos de las líneas de ramas.</li>
+<li><strong>git log --pretty=format:"%cn hizo un commit %h el día %cd"</strong> &gt;&gt; Nos permite mostrar mensajes personalizados de los commits.</li>
+</ul>
+
+<h3>Filtros</h3>
+
+<ul>
+<li><strong>git log -3</strong> &gt;&gt; por cantidad.</li>
+<li><strong>git log --after="2016-1-2" // git log --after="today" // git log --after="2016-1-1" --before="today"</strong>  &gt;&gt;&gt; por fecha.</li>
+<li><strong>git log --author="Miguel Nieva"</strong> &gt;&gt; por autor.</li>
+<li><strong>git log --grep="mensaje" -i</strong> &gt;&gt; por mensaje, el "-i" es para que no sea Case Sensitivity.</li>
+<li><strong>git log -- index.html</strong> &gt;&gt; por archivo.</li>
+<li><strong>git log -S"mensaje"</strong> &gt;&gt; por contenido.</li>
+</ul>
+
+<h3>Usos de log</h3>
+
+<ul>
+<li>Para ver el log de los commit, hay parámetros para visualizar mejor los resultados.</li>
+</ul>
+
+<pre><code>// log estándar.
+$ git log
+// Si es muy largo el log y aparece END al final, pulsamos la tecla ESC y escribimos “:q” para salir.
+
+// Windows, con "> log.txt" guarda el resultado de "git log" en un fichero llamado log.tx en el directorio actual. 
+$ git log > log.txt
+
+// nicelog
+git log --oneline --graph --all
+
+// superlog
+$ git log --graph --abbrev-commit --decorate --date=relative --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)" --all
+</code></pre>
+
+
+<ul>
+<li>Crear Alias de comandos si es que los necesitamos</li>
+</ul>
+<pre><code>// Crear alias
+$ git config --global alias.[nombreAlias] "[comando con parametros (qutando git delante)]"
+// Borrar alias creado
+$ git config --global --unset alias.nombreAlias
+// Mostrar contenido de un alias
+$ git config --global alias.nombreAlias
+
+/*
+NOTA: si el comando lleva comillas dobles, deben cambiarlas por comillas simples porque las dobles deben ir como parámetro del alias.
+*/
+</code></pre>
+
+
+<h2>RESET</h2>
+
+<p>Sirve para deshacer los cambios realizados moviéndose entre commits y borrando todo lo creado después del commit al cual queremos ir.</p>
+
+<h3>Reset hard</h3>
+
+<p>Hard: Working Directory = Staging Area = Repository </p>
+
+<p>Borra todos los commits posteriores al SHA indicado. (SHA se obtiene de los logs).</p>
+
+<p>IMPORTANTE: hacer una copia del log antes de ejecutar RESET HARD.</p>
+
+<pre><code>$ git reset --hard [SHA commit]
+</code></pre>
+
+
+<p>Se puede inmediatamente después, regresar a uno de los commit borrados, poniendo el SHA de ese commit.</p>
+
+<h3>Reset mixed</h3>
+
+<p>Mixed: Staging Area = Repository. Nada con Working Directory. Luego ejecuto Iteración básica (add + commit).</p>
+
+<p>Generalmente se utiliza cuando haces varios commits y luego te das cuenta que puedes unificarlos en uno solo, regresas al anterior y solo queda hacer el commit. </p>
+
+<pre><code>$ git reset --mixed [SHA commit]
+</code></pre>
+
+<p>También se puede regresar al último con el SHA del commit borrado.</p>
+
+<h3>Reset soft</h3>
+
+<p>Soft: Cambios sólo en el "Repository". Staging = Working. Luego solo commit.</p>
+
+<p>Al igual que el mixed, pero los ficheros modificados ya los deja en Staging Area, solo queda hacer commit.</p>
+
+<pre><code>$ git reset --soft [SHA commit]
+</code></pre>
+
+
+<p>También se puede regresar al último con el SHA del commit borrado.</p>
+
+<h2>RAMAS</h2>
+
+<p>Una rama es una línea alterna del tiempo en la historia de nuestro repositorio. Por ejemplo: Ideas - Features - Bug Fixes.</p>
+
+<p>La rama principal siempre se llama <strong>master</strong>.</p>
+
+<h3>Crear ramas</h3>
+
+<pre><code>$ git branch [nombreNuevaRama]
+$git checkout [nombreNuevaRama]
+// o se puede hacer directamente con:
+$ git checkout -b "[nombreNuevaRama]"
+</code></pre>
+
+<h3>Mostrar ramas</h3>
+
+<pre><code>$git branch -a
+* master
+  remotes/origin/master
+  remotes/origin/responsivedesign
+
+// con parámetro * se muestra las locales
+// con parámetro "remotes" las ramas escondidas de github.
+</code></pre>
+
+<p>El HEAD está en el commit de mi rama <strong>master</strong> y creamos nueva rama, el HEAD se queda posicionado en ese commit de <strong>master</strong> y cuando hacemos un nuevo <strong>commit</strong> desde la nueva rama, recién aparece la nueva rama.</p>
+
+<h3>Cambiar de ramas</h3>
+
+<pre><code>$ git checkout nombreDeRama
+</code></pre>
+
+
+<p>El HEAD se posiciona en el último commit de dicha rama</p>
+
+<h2>Eliminar ramas</h2>
+
+<p>Primero debe estar fusionada con una rama "superior"</p>
+
+<pre><code>$ git branch -d nombreRamaEliminar
+</code></pre>
+
+
+<h2>FUSIONES</h2>
+
+<p>Hay dos "tipos" de fusiones basándose en conceptos de conflictos:</p>
+
+<ul>
+<li><strong>Fast-Forward</strong>: cuando cada rama ataca ficheros diferentes o líneas diferentes dentro de un mismo fichero, no hay conflictos.</li>
+<li><strong>Manual Merge</strong>: +2 trabajan mismas líneas del mismo fichero, se debe revisar a mano para no generar conflictos.</li>
+</ul>
+
+<p>Nos ubicamos en la rama BASE (la que se mantenga) y ejecutamos el comando con el nombre de la rama PROPUESTA (la que se va a absorber), la línea de tiempo sigue en la rama BASE.</p>
+
+<h3>Fusionar ramas Fast-Forward</h3>
+
+<pre><code>(ramaBase)$ git merge nombreRamaFusionar
+</code></pre>
+
+
+<h3>Fusion Manual Merge</h3>
+
+<pre><code>(ramaBase)$ git merge nombreRamaFusionar
+Auto-merging readme.txt
+CONFLICT (content): Merge conflict in readme.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></pre>
+
+
+<p>Esto sale porque en ambas ramas se estaba editando la misma línea del mismo fichero readme.txt por lo que genera un CONFLICTO.
+En el fichero readme.txt se agregan los conflictos, es decir, se agrega lo que se hizo en cada rama</p>
+
+<pre><code><<<<<<< HEAD
+Querido mundo
+=======
+Hola Mundo
+>>>>>>> nombreRamaFusionar
+</code></pre>
+
+<p>Se borra manualmente lo que no queremos y guardamos el fichero. Por último realizamos un commit normal y luego las ramas se fusionan.</p>
+
+<p><strong>NOTA</strong>
+Puede salir un mensaje del tipo "Merge remote-traking branch "origin/master", el cual  solicita mensaje, se debe realizar así: Pulsamos tecla "o" para insertar texto, luego pulsamos tecla ESC, luego escribimos ":x" para salvar y pulsamos INTRO.</p>
+
+<h2>REBASE</h2>
+
+<p>Reordenar los commits de varias ramas para poner todos los commits en una sola rama.</p>
+
+<p>NOTA: Siempre hacer REBASE y luego MERGE.</p>
+
+<p>Ejemplo: Coger los commits de la rama "ramarebase" y llevarlos al final de la rama "master"</p>
+
+<pre><code>$ git superlog
+* e393272 - (4 seconds ago) 3 - Carlos Rojas (HEAD -> master)
+| * 466356d - (2 minutes ago) b - Carlos Rojas (ramarebase)
+| * 2ab856b - (2 minutes ago) a - Carlos Rojas
+|/
+* 5d8cfe6 - (4 minutes ago) 2 - Carlos Rojas
+* f113fb6 - (5 minutes ago) 1 - Carlos Rojas
+* 448f470 - (6 minutes ago) 0 - Iniciando proyecto 2 - Carlos Rojas
+
+// Hacer Rebase:
+(master)$ git checkout ramarebase
+(ramarebase)$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: a
+Applying: b
+
+(ramarebase)$ git superlog
+* 5dc7334 - (5 minutes ago) b - Carlos Rojas (HEAD -> ramarebase)
+* 13cb4c5 - (6 minutes ago) a - Carlos Rojas
+* e393272 - (4 minutes ago) 3 - Carlos Rojas (master)
+* 5d8cfe6 - (8 minutes ago) 2 - Carlos Rojas
+* f113fb6 - (9 minutes ago) 1 - Carlos Rojas
+* 448f470 - (10 minutes ago) 0 - Iniciando proyecto 2 - Carlos Rojas
+
+// Llevar master al último commit de ramarebase
+(ramarebase)$ git checkout master
+(master)$ git merge ramarebase
+
+(master)$ git superlog
+* 5dc7334 - (9 minutes ago) b - Carlos Rojas (HEAD -> master, ramarebase)
+* 13cb4c5 - (9 minutes ago) a - Carlos Rojas
+* e393272 - (7 minutes ago) 3 - Carlos Rojas
+* 5d8cfe6 - (12 minutes ago) 2 - Carlos Rojas
+* f113fb6 - (12 minutes ago) 1 - Carlos Rojas
+* 448f470 - (13 minutes ago) 0 - Iniciando proyecto 2 - Carlos Rojas
+</code></pre>
+
+
+
+<h2>IGNORE</h2>
+
+<p>Para decirle a GIT que ficheros no queremos subir al repositorio remoto de Githhub o al servidor.</p>
+
+<ul>
+<li><p>Dentro de la carpeta del proyecto ya iniciado creamos un fichero llamado ".gitignore".</p></li>
+<li><p>Dentro de ese fichero, línea a línea agregamos los ficheros o extensiones de que queremos ignorar:</p></li>
+</ul>
+
+<pre><code>*.txt
+nombrefichero.php
+</code></pre>
+
+<p>NOTA: los fichero que queremos ignorar NO deben estar subidos al repositorio remoto.</p>
+
+<h2>DIFF (comparar commits)</h2>
+
+<p>Sirve para comparar dos commits</p>
+
+<ul>
+<li>Primero obtenemos los ID de cada commit.</li>
+<li>Nos ubicamos en uno de los commits y ejecutamos:</li>
+</ul>
+
+<pre><code>$git diff [ID de otro commit]
+</code></pre>
+
+<p>Desde GITHUB se puede comparar directamente</p>
+
+<ul>
+<li>Entrar a un repo</li>
+<li>Pinchar el enlace de Commits</li>
+<li>Pulsar el ID de un commit para compararlo.</li>
+</ul>
+
+<h2>STASH</h2>
+
+<p>Para guardar temporalmente cambios realizados sobre ficheros desde el último commit, en caso que tengas que trabajar en otros cambios diferentes a los que estabas haciendo.</p>
+
+<p>Por ejemplo, estás trabajando en el header de la web pero no has terminado (no has hecho commits) y te piden urgente hacer un cambio en el footer y que hagas un commit solo del footer.
+Con STASH guardas temporalmente lo cambiado en header para trabajar lo del footer y luego recuperas lo guardado.</p>
+
+<ul>
+<li>Ejecutamos el comando donde estemos:</li>
+</ul>
+
+<pre><code>$ git stash
+</code></pre>
+
+<ul>
+<li>Trabajamos en el otro cambio y hacemos un commit.</li>
+<li>Listamos los stash creados.</li>
+</ul>
+
+<pre><code>$ git stash list
+</code></pre>
+
+<ul>
+<li>Si es el último, aplicamos los cambios a los ficheros.</li>
+</ul>
+
+<pre><code>$ git stash apply
+</code></pre>
+
+<ul>
+<li>Los cambios temporalmente guardados se aplican a los ficheros (WIP =Work In PRogress).</li>
+<li>Podemos seguir trabajando y hacer los commits que teníamos planeados.</li>
+</ul>
+
+<hr>
+
+<h2>URLS INTERESANTES</h2>
+
+<p><a href="http://www.racotecnic.com/2013/12/instalar-zsh-con-oh-my-zsh-y-enlaces-en-menus-contextuales-en-windows-utilizando-cygwin/" target="_blank">Instalar zsh en Windows con “oh my zsh”</a></p>
+
+<p><a href="https://git-scm.com/book/es/v1/Ramificaciones-en-Git-Reorganizando-el-trabajo-realizado" target="_blank">3.6 Ramificaciones en Git - Reorganizando el trabajo realizado</a></p>
+
+<p><a href="http://ndpsoftware.com/git-cheatsheet.html" target="_blank">Cheat Sheet Git interactivo</a></p>
+
+<p><a href="https://html5up.net/" target="_blank">HTML5 Up</a> - Web para descargar plantillas simples de HTML5</p>
+
+<p><a href="https://github.com/integrations" target="_blank">GITHUB INTEGRATIONS</a>
+Muestra plugins y conectores a otras herramientas, aplicaciones de Test, etc.</p>
+
+<p><a href="http://librosweb.es/libro/pro_git/" target="_blank">Pro Git, el libro oficial de Git (librosweb.es)</a></p>
+
+<p>Interfaces Web para Bare Repositories Privados:
+<a href="https://git.wiki.kernel.org/index.php/Gitweb" target="_blank">Gitweb </a>
+<a href="https://github.com/klaussilveira/gitlist" target="_blank">gitlist </a>
+<a href="https://about.gitlab.com/downloads/" target="_blank">GitLab</a>
+Todas las puedes instalar en tu propio servidor yo recomiendo Gitlab tiene una enorme y excelente comunidad</p>
+
+<h2>COMANDOS DE TERMINAL</h2>
+
+<ul>
+<li>Listar directorios</li>
+</ul>
+
+<pre><code>// Lista los archivos de un determinado directorio
+$ ls
+
+// Lista también las propiedades y atributos
+$ ls -l
+
+// Lista todos los archivos, incluidos los ocultos y los del sistema
+$ ls -a
+</code></pre>
+
+
+
+<ul>
+<li>Navegar directorios</li>
+</ul>
+
+<pre><code>// ir a una subcarpeta
+cd nombreSubCarpeta
+cd "Nombre Sub Carpeta"
+
+// subir de nivel
+$ cd ..
+
+// ir directo a raiz
+cd /
+
+// cambiar de disco duro, x = letra de la unidad
+cd /x
+
+// ir directo a carpeta de mi usuario (poner "cd" solo)
+cd
+// la carpeta de mi usuario de llama "~" (Alt + 126, pero desde Brackets con AltGr)
+</code></pre>
+
+<p>NOTA: Autocompletar: escribimos la primera parte del nombre y luego pulsamos la tecla TAB</p>
+
+<ul>
+<li>Crear carpeta</li>
+</ul>
+
+<pre><code>$ mkdir nombreCarpeta
+</code></pre>
+
+<ul>
+<li>Borrar directorio con ficheros</li>
+</ul>
+
+<pre><code>$ rm -rf nombreCarpeta
+</code></pre>
+
+<ul>
+<li>Limpiar pantalla</li>
+</ul>
+
+<pre><code>$ clear
+</code></pre>
+
+<ul>
+<li>Editar fichero</li>
+</ul>
+
+<pre><code>$ vi nombre-readme.txt
+// Se sale de edición pulsando ESC y escribiendo “:x”
+</code></pre>
+
+<p><a href="http://www.guia-ubuntu.com/index.php/Comandos">Más Comandos Linux</a></p>
+
+                 
+		                
+                        <ul class="actions">
+                                <li><a href="index.html" class="button small">Inicio</a></li>
+                        </ul>
+					</article>
+
+
+        </div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="https://twitter.com/chiquirf" class="icon fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+					<li><a href="https://github.com/crojasf/" class="icon fa-github" target="_blank"><span class="label">Github</span></a></li>
+					<li><a href="https://www.facebook.com/chiquirf" class="icon fa-facebook" target="_blank"><span class="label">Facebook</span></a></li>
+					<li><a href="mailto:crojasf@gmail.com" class="icon fa-envelope-o"><span class="label">Email</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; Carlos Rojas F.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
