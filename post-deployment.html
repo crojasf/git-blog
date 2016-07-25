@@ -43,7 +43,195 @@
 				<!-- Two -->
 					<article id="two">
 						<span class="image fit"><img src="images/fulls/03.jpg" alt="" /></span>
-		                <p>Aquí va el contenido del post</p>
+                    
+<p>Profesor: Miguel Nieva | Twitter: <a href="https://twitter.com/mikenieva" target="_blank">@mikenieva</a> |
+<a href="http://git.miguelnieva.com/#/" target="_blank">Documentación del curso.</a></p>
+
+<h2>HOSTING PROPIO</h2>
+
+<p>Tenemos que solicitar al hosting un acceso a SSH para acceder a los ficheros de las webs instaladas en nuestro hosting.</p>
+
+<p>Se debe generar una clave SSH en el servidor y la pública ponerla en GITHUB, al igual que en LOCAL (ver notas de GITHUB).</p>
+
+<p>En mi hosting la conexión es con clave privada y por puerto 93:</p>
+
+<pre><code>$ ssh -i ruta-de-mi-clave/nombre-clave miusuario@midominio.com -p 93
+The authenticity of host '[midominio.com]:93 ([000.000.000.00]:93)' can't be established.
+RSA key fingerprint is SHA256:qwerty…………..123456.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[midominio.com]:93,[ 000.000.000.00]:93' (RSA) to the list of known hosts.
+Enter passphrase for key nombre-clave.ppk': &lt;&lt;&lt;&lt; AQUI PONEMOS LA PASS DE ACCESO AL HOSTING
+Attempting to create directory /home/ miusuario /perl5
+miusuario @ midominio.com [~]#
+</code></pre>
+
+<p>Es la única conexión que otorgan por lo que es la misma para todos los servicios que tengo.</p>
+
+<p>En el hosting debo tener instalado GIT, y por consola se podría instalar</p>
+
+<pre><code>// En mi hosting ya está instalado, si no lo está:
+$ yum install git
+</code></pre>
+
+<p>Se debe traer el repositorio de Github al servidor ejecutando el comando <strong>desde la carpeta donde se va a mostrar la web</strong>, por ejemplo:</p>
+
+<pre><code>$ cd /public_html/www.midominio.com/
+$ git init
+$ git remote add origin [HTTPS ó SSH del proyecto]
+$ git pull origin master
+</code></pre>
+
+<p>NOTA: tener mucho cuidado donde ejecutamos los comandos para no estropear otras partes del hosting.</p>
+
+<h2>AMAZON WEB SERVICES - AWS</h2>
+
+<h3>Introducción</h3>
+
+<p>Es un servicio de Hosting escalable de forma automática y con muchas opciones de configuración.</p>
+
+<p>Es gratuito si el tráfico es bajo, pero de pago en función de la necesidad puntual del tráfico.</p>
+
+<h3>Acciones básicas para montar un Hosting.</h3>
+
+<p>Entramos a <a href="https://aws.amazon.com/es/">Amazon Web Services</a> y nos logamos con nuestra cuenta de Amazon. En "Mi cuenta" entramos a "Consola de administración de AWS".</p>
+
+<p>Arriba a la izquierda entramos en <strong>EC2</strong> para empezar la configuración del site.</p>
+
+<p><strong>Key Pair</strong>: creamos una clave dando un nombre y automáticamente se descarga un fichero "nombrekey.pem". Lo guardamos en nuestro ordenador en la carpeta ".ssh". Se recomienda aplicar seguridad al fichero desde Terminal dando permisos de lectura solo a mi usuario:</p>
+
+<pre><code>$ chmod 0400 fichero.pem
+</code></pre>
+
+<p><strong>Security Groups</strong>: creamos reglas de seguridad para permitir entradas a puerto 80 de html y 22 para SSH. Por ejemplo: nombre "load-balancer-NOMBRE", descripción "Allow 80 22", agregamos regla HTTP y SSH.</p>
+
+<p><strong>Load Balancer</strong>: creamos lógicas de balanceo, por ejemplo, si detecta mucho tráfico, parte de él lo deriva a otra instancia con una copia idéntica de mi proyecto.</p>
+
+<p><strong>Instancia</strong> Es una sesión de un Sistema Operativo en el Servidor donde poder subir mi proyecto, como una máquina virtual. Aquí irán los ficheros de mi web. Dejamos generalmente todo por defecto, solo necesitaremos darle un nombre y seleccionar un Security Group.</p>
+
+<h3>Conectarse a una instancia de AWS desde Terminal por SSH</h3>
+
+<p>Conectarse por SSH a la instancia con este comando de terminal:</p>
+
+<pre><code>$ ssh -i ficherollave.pem ipPublicaInstancia -l usuarioAWS
+</code></pre>
+
+<p>Ejemplo: </p>
+
+<pre><code>$ ssh -i ejemplo.pem 00.00.000.00 -l ec2-user
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-ami/2016.03-release-notes/
+[ec2-user@ip-000-00-00-000 ~]$
+</code></pre>
+
+
+<h3>Primeras instalaciones y acciones en la instancia</h3>
+
+<p>Aquí instalaremos LAMP, GIT y daremos permisos de sudo a nuestro usuario.</p>
+
+<p>Actualizamos yum</p>
+
+<pre><code>$ sudo yum update -y
+</code></pre>
+
+
+<p>Instalamos AMP: Apache, MySQL y PHP</p>
+
+<pre><code>$ sudo yum install -y httpd24 php56 mysql55-server php56-mysqlnd
+</code></pre>
+
+
+<p>Inicialamos Apache</p>
+
+<pre><code>$ sudo service httpd start
+</code></pre>
+
+<p>Configuramos Apache para que inicie en cada inicio de sistema</p>
+
+<pre><code>$ sudo chkconfig httpd on
+</code></pre>
+
+<p>Instalar GIT:</p>
+
+<pre><code>$ sudo yum install git
+</code></pre>
+
+
+<p>Dar permisos de sudo al usuario ec2-user a la carpeta www navegando hasta ella</p>
+
+<pre><code>$ cd /var/www
+</code></pre>
+
+<p>Creamos grupo llamado "www".</p>
+
+<pre><code>$ sudo groupadd www
+</code></pre>
+
+<p>Agregamos usuario ec2-user al grupo www.</p>
+
+<pre><code>$ sudo usermod -a -G www ec2-user
+</code></pre>
+
+<p>OJO: Salimos del sistema y volvemos a entrar para que se apliquen los permisos.</p>
+
+<p>Verificamos permisos de grupo.</p>
+
+<pre><code>$ groups
+ec2-user wheel www
+</code></pre>
+
+<p>Cambiamos de "dueño" del de carpeta /var/www.</p>
+
+<pre><code>$ sudo chown -R root:www /var/www
+</code></pre>
+
+<p>Cambiamos permisos en carpeta y subcarpetas, otorgando los de escritura.</p>
+
+<pre><code>$ sudo chmod 2775 /var/www
+$ find /var/www -type d -exec sudo chmod 2775 {} \;
+</code></pre>
+
+<p>Cambiamos lo permisos a los fichero de las carpetas.</p>
+
+<pre><code>$ find /var/www -type f -exec sudo chmod 0664 {} \;
+</code></pre>
+
+<p>NOTA: Si no hacemos esto, tendremos que poner "sudo" delante de casi todos los comandos que ejecutemos.</p>
+
+<h3>Traer el proyecto desde Github</h3>
+
+<p>Navegar hasta donde está la carpeta html de la instancia:</p>
+
+<pre><code>$ cd /var/www/html/
+</code></pre>
+
+<p>Iniciar GIT:</p>
+
+<pre><code>$ git init
+</code></pre>
+
+<p>Traer el repositorio:</p>
+
+<pre><code>$ git remote add origin [SSH]
+$ git pull origin master
+</code></pre>
+
+<p>En el navegador entramos a la URL de la Web: http://DNS.Servicio/nombre-repositorio-git/  </p>
+
+
+<p>A partir de aquí ya podemos hacer los PULL que queramos desde GIT</p>
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
 		                
                         <ul class="actions">
                                 <li><a href="index.html" class="button special small">Inicio</a></li>

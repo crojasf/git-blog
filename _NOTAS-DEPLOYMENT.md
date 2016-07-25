@@ -112,8 +112,7 @@ Instalar GIT:
 $ sudo yum install git
 ```
 
-Dar permisos de sudo al usuario ec2-user a la carpeta www:
-Navegamos hasta www.
+Dar permisos de sudo al usuario ec2-user a la carpeta www navegando hasta ella
 ``` shell
 $ cd /var/www
 ```
@@ -161,7 +160,7 @@ $ cd /var/www/html/
 
 Iniciar GIT:
 ``` shell
-$ git ini
+$ git init
 ```
 
 Traer el repositorio:
@@ -170,10 +169,7 @@ $ git remote add origin [SSH]
 $ git pull origin master
 ```
 
-En el navegador entramos a la URL de la Web:  
-```html
-http://DNS.Servicio/nombre-repositorio-git/
-```
+En el navegador entramos a la URL de la Web: http://DNS.Servicio/nombre-repositorio-git/ 
 
 A partir de aquí ya podemos hacer los PULL que queramos desde GIT
 
