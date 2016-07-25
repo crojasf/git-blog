@@ -46,7 +46,442 @@
                     
 						<span class="image fit"><img src="images/fulls/02.jpg" alt="" /></span>
                     
-		                <p>Aquí va el contenido del post</p>
+
+
+<p>Profesor: Miguel Nieva | Twitter: <a href="https://twitter.com/mikenieva" target="_blank">@mikenieva</a> |
+<a href="http://git.miguelnieva.com/#/" target="_blank">Documentación del curso.</a></p>
+
+<h2>DEFINICIONES</h2>
+
+<p>GitHub es una Plataforma social en la cual desarrolladores suben sus proyectos de código, con el objetivo de mejorarlos a través de la colaboración y gestión.</p>
+
+<p>Es un servicio de “hosting" de repositorios, a través de una interfaz web gráfica.</p>
+
+<h2>PASOS BASICOS EN GITHUB</h2>
+
+<h3>Crear repositorio en GitHub</h3>
+
+<ul>
+<li>Entrar a mi usuario de GITHUB.</li>
+<li>Ver Profile.</li>
+<li>Pestaña Repositories.</li>
+<li>Botón New.</li>
+<li>Poner nombre y crear.</li>
+</ul>
+
+<h3>Crear clave SSH en local</h3>
+
+<p>Creamos una clave SSH para asociar GitHub con mi Ordenador.</p>
+
+<p>Se crean 2 ficheros, uno privado que irá guardado en una carpeta en local (se recomienda “.ssh”) y el otro se usará para obtener el código de la clave ssh pública y agregarla a Github.</p>
+
+<p>El comando es <strong>ssh-keygen</strong>, y los parámetros a utilizar son:</p>
+
+<ul>
+<li>-t rsa: es el tipo de codificación.</li>
+<li>-b 4096: es el tamaño de bits.</li>
+<li>-C "[email-de-GitHub]": Es un comentario, pero Github lo usa para asegurar que es tu sitio.</li>
+<li>-f [ruta relativa y nombre-clave]: Por defecto es tu carpeta de usuario (~) pero se puede indicar la ruta relativa a la carpeta .ssh)</li>
+</ul>
+
+<p>Al ejecutarlo nos pide crear contraseña, podemos escribirla o dejarla en blanco, pulsamos INTRO. Confirmamos contraseña anterior o en blanco.</p>
+
+<pre><code>$ ssh-keygen -t rsa -b 4096 -C "[email-de-GitHub]" -f [ruta-relativa/nombre-clave]
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in .ssh/nombre-clave.
+Your public key has been saved in .ssh/nombre-clave.pub.
+The key fingerprint is:
+SHA256:5OOdmbFrdns………fg4364be5Pk email-de-GitHub
+The key's randomart image is:
++---[RSA 4096]----+
+|        .#B**.+o |
+|   o   . *oO.o+.o|
+|      . = *+ o *.|
+|     So . .EoO. |
+|    . . S   ++.=.|
+|       o o . .+ =|
+|    .O  . .    = |
+|       .:.       o|
+|               . |
++----[SHA256]-----+
+</code></pre>
+
+
+
+<p>Entramos a la ruta donde guardamos el SSH y ejecutamos comando para mostrar clave SSH</p>
+
+<pre><code>$ cat mombre-clave.pub
+ssh-rsa kVviMaDTxV35urj0Cc0STDmacjor5w1lKr4JRnQyW7AHSBSOFPxRD1MUuoaceyJWiK9O/F4HJlhLehjqhamTQwTDnT518WOtyd/ySqisVAiMES3aruxiOSWxhWJcykiPXRnIsUtVsv8np4ieShlVrMzGEVLpveU4ZYfx1d78wrPXhv...5jpZNY26hlYs+sR9MTKmLnyajTdqT4Wk2ONWcA8pVK4s3es2SLBoZBrvYbOaqoJM5GY/w== email-de-GitHub
+</code></pre>
+
+<p>El resultado es la Llave Pública, se copia todo el texto "ssh-ra qwert.....12344== email-de-GitHub " y dentro de GitHub la pegamos en Settings &gt; SSH.
+Utilizar un nombre descriptivo al equipo, por ejemplo: "Windows PC-CHIQUI"</p>
+
+<p>Repetir el mismo proceso por cada equipo o hosting al cual se vaya a asociar el repositorio.</p>
+
+<h3>Agregar colaboradores</h3>
+
+<p>Los colaboradores personas que pueden trabajar directamente con el proyecto (sin necesidad de hacer fork a su cuenta). Según los permisos otrogados podrán hacer commits, push, pull, merge, etc.</p>
+
+<p>En el Repositorio de GitHub, pulsamos la pestaña Settings y en el menú de la izquierda en Collaborators.</p>
+
+<h2>ACCIONES Y CONCEPTOS PRINCIPALES</h2>
+
+<p>Dependo si trabajamos con nuestro propio repositorio o con los de otras personas tenemos que tener claro eso:</p>
+
+<ul>
+<li><strong>ORIGIN</strong>: es el nombre del "repositorio local espejo" del repositorio remoto en la cual soy propietario, puede ser el repositorio creado por mi o el repositorio creado tras hacer un FORK (copiar el repositorio de otro a mi usuario), o uno creado por la organización en el cual soy colaborador.</li>
+<li>*<em>UPSTREAM</em>: es el nombre del "repositorio local espejo" del repositorio remoto de otra persona asociado al repositorio forked copiado en mi usuario.</li>
+</ul>
+
+<p>Las acciones principales entre repositorio local (mi PC o el servidor web) y repositorio remoto (Github) son:</p>
+
+<ul>
+<li><strong>clone</strong>: Clona repositorio Github en local, copia la carpeta del proyecto donde ejecutemos el comando.</li>
+</ul>
+
+<pre><code>$ git clone [repositorio vía SSH ó HTTPS]
+</code></pre>
+
+<ul>
+<li><strong>remote</strong>: Realiza una conexión entre remoto y local, no descarga nada. Se ejecuta dentro de la carpeta ya creada con el nombre del proyecto.</li>
+</ul>
+
+<pre><code>(master)$ git remote add origin [repositorio propio vía SSH ó HTTPS] 
+(master)$ git remote add upstream [repositorio no propio vía SSH ó HTTPS]
+
+</code></pre>
+
+<ul>
+<li><strong>fetch</strong>: Descarga las ramas del repositorio remoto (origin) a un repositorio espejo en local (origin/nombre-de-rama).</li>
+</ul>
+
+<pre><code>(master)$ git fetch origin
+
+</code></pre>
+
+<ul>
+<li><strong>merge</strong>: Fusiona la rama indicada del repositorio espejo local al repositorio local.
+IMPORTANTE: debo estar ubicado en la rama a la cual quiero “traer” la rama que indico en el comando.</li>
+</ul>
+
+<pre><code>(master)$ git merge origin/master
+(feature)$ git merge origin/feature
+</code></pre>
+
+<ul>
+<li><strong>pull</strong>: Realiza fetch y merge en un solo comando (fetch + merge = pull). Recomendable solo al inicio o si trabajamos solos.
+Esto trae de origin (repositorio remoto) la rama master y la guarda en local. Si hay conflictos pedirá hacer una fusión (merge).
+NOTA: es preferible hacer "fetch + merge" que "pull" directamente, porque se tiene más control de lo que va haciendo.</li>
+</ul>
+
+<pre><code>(master)$ git pull origin master
+</code></pre>
+
+<ul>
+<li><strong>push</strong>: Sube los cambios de local a remoto.
+Sube la rama master de local a la rama master de origin</li>
+</ul>
+
+<pre><code>(master)$ git push origin master
+</code></pre>
+
+<h2>CONEXION CON REPOSITORIO REMOTO</h2>
+
+<h3>Conexión Remota</h3>
+
+<p>El comando <strong>remote</strong> Sirve para conectar un repositorio remoto con uno local.</p>
+
+<pre><code>// Realizar conexión con el repositorio que soy propietario
+$ git remote add origin [repositorio vía SSH ó HTTPS]
+
+// Realizar conexión con el repositorio principal del proyecto que hice FORK.
+$ git remote add upstream [repositorio vía SSH ó HTTPS]
+
+// Muestra la dirección del remoto de push y fetch
+$ git remote -v
+
+// Quitar una conexión remota ya creada
+$ git remote remove nombreConexion
+</code></pre>
+
+<p>Es IMPORTANTE que se ejecute el comando desde el directorio local que se va a utilizar para el servidor web. Todos los ficheros contenidos en el repositorio remoto se grabarán aquí.</p>
+
+<p><strong>Ejemplo práctico Local:</strong>
+Si en mi ordenador, la carpeta donde voy a guardar mi web es: "D:\WEBS\www_crojasf\www\", desde ahí debo ejecutar el comando remote.</p>
+
+<p><strong>Ejemplo práctico Hosting:</strong>
+Si en mi servidor la carpeta donde se ve mi web es: "/public_html/<a href="http://www.crojasf.com">www.crojasf.com</a>", desde ahí debo ejecutar el comando remote.</p>
+
+<h3>Habilitar ssh-agent</h3>
+
+<p>En algunos casos es necesario habilitar primero el ssh-agent e indicarle manualmente la ruta de mi clave:</p>
+
+<pre><code>// turn on ssh-agent
+$ eval $(ssh-agent -s)
+
+// Limpiamos caché de identidades, y agregamos las nuevas llaves:
+$ ssh-add -D
+All identities removed.
+
+// Agregamos claves de los usuarios:
+$ ssh-add ruta_de_clave_rsa/clave_rsa
+Identity added: clave_rsa (clave_rsa)
+</code></pre>
+
+<h2>EXPLORACION (Clone)</h2>
+
+<p>El comando <strong>clone</strong> sirve para descargar un proyecto de la web de GITHUB sin intención de colaborar. Crea una carpeta con el proyecto en la ruta donde ejecuto el comando:</p>
+
+<pre><code>$ git clone [repositorio vía SSH ó HTTPS]
+</code></pre>
+
+
+
+<p>Si se quiere utilizar para colaborar (cambiar cosas y subirlas), dentro de la carpeta habrá que hacer un "remote" y luego poder hacer commits, pulls y push.</p>
+
+<h2>COLABORACION (Workflow)</h2>
+
+<p>Son flujos de trabajo colaborativos, donde varios desarrolladores trabajan sobre el mismo proyecto.</p>
+
+<p>Hay varios tipos:</p>
+
+<h3>1) Proyectos creados por ti - Repositorios personales.</h3>
+
+<ul>
+<li>Eres propietario del proyecto. </li>
+<li>Personas alrededor proponen y tú decides si aceptar o no.</li>
+<li>Proyectos personales, generalmente.</li>
+</ul>
+
+<p><strong>Iteración básica en tu área local y subir a GitHub</strong></p>
+
+<pre><code>$ git init
+
+// Realizamos una iteración básica
+$ git commit -am "[Mensaje]"
+
+// Asociarnos en local el repositorio remoto. Solo es necesario hacerlo la primera vez.
+$ git remote add origin [SSH]
+
+
+// ### SUBIR DE LOCAL A GITHUB
+// Sube al repositorio remoto "origin" la rama "master"
+$ git push origin master
+
+// ### BAJAR DE GITHUB A LOCAL
+// Descargamos lo que haya en remoto, se descarga en "origin".
+$ git fetch origin
+
+// Fusionamos "origin/master" en "master" del local.
+$ git merge origin/master
+
+// "fetch + merge = pull", estos dos pasos se unen en uno solo: "trae origin y cópialo en master".
+$ git pull origin master
+</code></pre>
+
+
+<h3>2) Proyectos creados por tu organización o equipos.</h3>
+
+<ul>
+<li>Todos son propietarios del proyecto (Colaboradores). </li>
+<li>Todos suben cambios, sin pedir permisos. </li>
+<li>Siempre verificar cambios nuevos antes de subir propios.</li>
+</ul>
+
+<p><strong>Conceptos</strong></p>
+
+<p>Al descargar un Repositorio Remoto, en el Repositorio Local se crean las ramas duplicadas: una como "origin/master" (rama del repositorio local espejo) y otra como "master" (rama del repositorio local).</p>
+
+<p>"origin/master" es una rama de transición entre la rama master del Remoto con la rama master de Local.</p>
+
+<p>Trabajo en mi rama master de local haciendo commits.</p>
+
+<p>Para unificarlo, debo bajar los posibles cambios del remoto con "fetch", los cambios se bajan en origin/master.</p>
+
+<p>Luego debo fusionar con "merge" de origin/master hacia master de Local, master tendrá todos los cambios (los míos y los nuevos).</p>
+
+<p>Se termina subiendo al Remoto haciendo "push".</p>
+
+<p><strong>Comandos: Git Fetch + Git Merge + Git Push</strong></p>
+
+
+
+<pre><code>// Conectamos al repositorio remoto
+$ git remote add origin [SSH]
+
+// Descargamos lo que haya en remoto, se descarga en "origin/master".
+$ git fetch origin
+
+// Fusionamos "origin/master" en "master" del local.
+$ git merge origin/master
+
+// "fetch + merge = pull", estos dos pasos se unen en uno solo: "trae origin y cópialo en master".
+$ git pull origin master
+
+** Desarrollamos **
+
+// Descargamos lo que haya en remoto por si hubo cambios.
+$ git pull origin master
+
+// Subimos todo al remoto.
+$ git push origin master
+</code></pre>
+
+
+
+<h3>3) Proyectos de terceros. (Repositorios “forked”)</h3>
+
+<ul>
+<li>No son dueños, pero quieren colaborar en el desarrollo.</li>
+<li>Los propietarios aceptan y rechazan propuestas a través de “Pull Request”.</li>
+</ul>
+
+<p>Existirán 2 repositorios: </p>
+
+<p>a) El repositorio principal, el que no es mío y no soy colaborador.
+b) El repositorio forked (La réplica del principal, en tu cuenta de GitHub).</p>
+
+<p><strong>Conceptos</strong></p>
+
+<p>Entro en GitHub al proyecto principal logado con mi usuario, y pulso el botón "Fork". Esto clona el repositorio en mi cuenta.</p>
+
+<p>En Local se conectan a ambos Remotos: origin (mi cuenta o forked) y upstream (proyecto principal), y descargamos a local ambos remotos.</p>
+
+<p>En Local quedarían las siguientes ramas: origin/master(forked), upstream/master(principal) y master(local), siendo las dos primeras las de los repositorios locales espejo.</p>
+
+<p>Actualizamos Local siempre del repositorio principal y del forked, antes de comenzar.</p>
+
+<p>Trabajo en mi rama master de Local.</p>
+
+<p>Vuelvo a actualizar del repositorio principal y del forked y realizo "push" que se hace solo a repositorio forked.</p>
+
+<p>Desde GitHub hacemos un "pull request" desde Forked al repositorio principal, pulsamos botón "New pull request", comparamos ramas, luego pulsamos "Create pull request". Dejamos un comentario y pulsamos "Create pull request".</p>
+
+<p><strong>Comandos</strong></p>
+
+
+<pre><code>// Conectamos a origin(forked) y upstream(principal)
+$ git remote add origin [HTTPS ó SSH del proyecto forked]
+$ git remote add upstream [HTTPS ó SSH del proyecto principal]
+
+// Bajamos cambios de forked y principal y sincronizamos con local
+$ git pull origin master
+$ git pull upstream master
+
+//Hacer cambios en local
+
+// Bajamos cambios de principal y sincronizamos con local
+$ git pull upstream master
+
+// Subimos cambios a forked
+$ git push origin master
+</code></pre>
+             
+
+<p>Luego desde GitHub hacemos un "Pull Request" al repositorio principal.</p>
+
+<h2>PROJECT MANAGEMENT CON GITHUB</h2>
+
+<h3>Temario</h3>
+
+<ul>
+<li>Project Management </li>
+<li>Issues </li>
+<li>Milestones </li>
+<li>Tags </li>
+<li>Usuarios </li>
+<li>Pull Request en equipos</li>
+</ul>
+
+<h3>Crear Organización</h3>
+
+<p>Dentro de GitHub creamos una Organización (el equipo de la empresa), luego agregamos los miembros de la Organización y por último creamos un repositorio.</p>
+
+<p>En el repositorio entramos a Settings &gt; Collaborators y agregamos los colaboradores de ese repositorio, también podemos crear equipos de trabajo.</p>
+
+<p><strong>Buenas prácticas</strong>: Dentro del repositorio, debajo de las pestañas aparece la descripción, al lado hay un enlace "Edit" y ahí agregamos la URL del proyecto.</p>
+
+<p>Documentar el proyecto con README.md con una estructura básica:</p>
+
+
+<pre><code>[Descripción del proyecto]
+[Instalación del proyecto en local]
+- Requisitos
+- Ultima Version
+- Encargados del proyecto
+[Usage = Uso del proyecto]
+- Características
+- Plugins
+[Documentación]
+[Roadmap]
+[Licencia]
+</code></pre>
+
+
+
+<h3>Issues y Milestones</h3>
+
+<p>RESUMEN: Un PROYECTO se divide a primer nivel en MILESTONES, luego cada MILESTONES se divide en ISSUES asignando TAGS según el tipo de ISSUES.</p>
+
+<p>Dentro de la Organización entramos en la pestaña ISSUES para administrar esto.</p>
+
+<p><strong>Conceptos</strong></p>
+
+<ul>
+<li><p>** MILESTONES ** es la línea de progreso de etapas del proyecto. Por ejemplo: "desarrollo del blog", "Desarrollo del carrito de compra", "desarrollo del landingpage", etc. Los Milestones son colecciones de Issues y Pull Requests. Se le puede poner fecha de finalización de esta etapa.</p></li>
+<li><p>** ISSUES ** es utilizado para definir trabajos puntuales del tipo ToDos, Bugs, Feature request, etc. Por ejemplo, en un LandingPage habrá: "Header, buscador, sidebar, footer, etc.</p></li>
+<li><p>** TAGS **, son etiquetas para identificar por tipo de trabajo. Por defecto hay: bug, duplicate, enhancement (mejora), help wanted, invalid, question, wonfix.</p></li>
+</ul>
+
+<p><strong>Acciones</strong></p>
+
+<p>Creamos Milestones agregando título, descripción y fecha de fin de desarrollo.</p>
+
+<p>Creamos Issues, uno para cada cosa que necesitamos. Se asocia a un Milestone, se asignan Tags (opcional) y se asigna un desarrollador responsable de ejecutarlo.</p>
+
+<p>Dentro de cada Issue se pueden crear varios comentarios y al final de cierra para indicar que está terminado. Cuando todos los Issues de un Milestone están terminados, de da por concluida esa etapa del proyecto.</p>
+
+
+<h3>Wiki</h3>
+
+<p>Principalmente es para dejar indicado un RoadMap: pasos del proyecto, miembros que hemos agregado, fechas de proyecto, versiones, etc. </p>
+
+<p>El README.md es más conciso y directo, pero la Wiki es más detallado, ejemplo: <a href="https://github.com/TryGhost/Ghost/wiki">TryGhost</a></p>
+
+<h3>Pulse</h3>
+
+<p>Es un resumen en tiempo de cómo va yendo el proyecto.</p>
+
+<h3>Graphs</h3>
+
+<p>Muestra todos cambios realizados, es como el log de git en gráfico y con más datos.</p>
+
+<h2>GITHUB PAGES</h2>
+
+<h3>GitHub Pages para usuarios</h3>
+
+<p>Creamos un Repo con el nombre [miUsuarioGithub.github.io] y subimos a la rama master los ficheros.</p>
+
+<p>El contenido se verá en la url: http://miUsuarioGithub.github.io</p>
+
+<h3>GitHub Pages para organizaciones</h3>
+
+<p>En un Repo ya existente (nombreRepo), preparamos todos los ficheros en la rama master como siempre.</p>
+
+<p>Cuando todo esté listo para publicar, creamos una rama llamada <strong>gh-pages</strong> y copiamos todo el contenido de mi proyecto en esa rama con push.</p>
+
+<pre><code>$ git branch gh-pages
+$ git push origin gh-pages
+</code></pre>
+
+<p>El contenido de la rama gh-pages se verá en la url: http://miUsuarioGithub.github.io/nombreRepo</p>
+
+
+
+                        
 		                
                         <ul class="actions">
                                 <li><a href="index.html" class="button small">Inicio</a></li>
