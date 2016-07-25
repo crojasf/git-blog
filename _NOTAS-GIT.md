@@ -1,19 +1,17 @@
 # GIT
 
-Profesor: Miguel Nieva
-Twitter: [@mikenieva](https://twitter.com/mikenieva)
-[Documentación del curso.](http://git.miguelnieva.com/#/)
+Profesor: Miguel Nieva | Twitter: [@mikenieva](https://twitter.com/mikenieva) | [Documentación del curso.](http://git.miguelnieva.com/#/)
 
 
 ## ESTRUCTURA DE ARBOL
 
-1 .- Working Directory (mi disco duro donde trabajo)
-2 .- Staging área (preparación para subir al repositorio)
-3 .- Repository local (lugar donde se guarda el proyecto, y se sube haciendo "commit")
+1. Working Directory (mi disco duro donde trabajo)
+2. Staging área (preparación para subir al repositorio)
+3. Repository local (lugar donde se guarda el proyecto, y se sube haciendo "commit")
 
 ### Conceptos
 * **origin**: Nombre de la conexión con mi Repositorio Remoto de Github.
-* ** upstream**: Nombre de la conexión remota con el Repositorio principal al cual yo hice Fork en Github.
+* **upstream**: Nombre de la conexión remota con el Repositorio principal al cual yo hice Fork en Github.
 * **master**: Nombre de la rama principal de cualquier proyecto.
 * **rama1**: Se pueden crear nuevas ramas con el nombre que se quiera.
 * **origin/master**: Es la rama master “espejo” del Repositorio Remoto descargado en mi Repositorio Local, es un repositorio intermedio entre la rama master del remoto con la rama master de local.
@@ -116,8 +114,9 @@ Luego de movernos a una parte del proyecto, SIEMPRE hay que regresar donde está
 ## GIT WORKFLOW
 
 ### Iteración Básica 
-git add >> agregamos cambios de Working area a Staging area
-git commit >> agregamos cambios de Staging area a Repository Local
+**git add** >> agregamos cambios de Working area a Staging area
+
+**git commit** >> agregamos cambios de Staging area a Repository Local
 ``` php
 // Agrega los cambios al Staging Area
 $ git add [file or directory]
@@ -169,7 +168,7 @@ $ git commit -m "comentario_del_commit"
 ```
 
 NOTA: se puede hacer “add –A” + “commit –m” con el parámetro “-am”:
-```
+``` php
 $ git commit -am "comentario_del_commit"
 ```
 
@@ -275,7 +274,7 @@ Una rama es una línea alterna del tiempo en la historia de nuestro repositorio.
 
 La rama principal siempre se llama **master**.
 
-## Crear ramas
+### Crear ramas
 ``` php
 $ git branch [nombreNuevaRama]
 $git checkout [nombreNuevaRama]
@@ -283,8 +282,8 @@ $git checkout [nombreNuevaRama]
 $ git checkout -b "[nombreNuevaRama]"
 ```
 
-## Mostrar ramas
-```
+### Mostrar ramas
+``` php
 $git branch -a
 * master
   remotes/origin/master
@@ -303,7 +302,7 @@ $ git checkout nombreDeRama
 
 El HEAD se posiciona en el último commit de dicha rama
 
-## Eliminar ramas
+### Eliminar ramas
 Primero debe estar fusionada con una rama "superior"
 ``` php
 $ git branch -d nombreRamaEliminar
@@ -319,12 +318,12 @@ Hay dos "tipos" de fusiones basándose en conceptos de conflictos:
 
 Nos ubicamos en la rama BASE (la que se mantenga) y ejecutamos el comando con el nombre de la rama PROPUESTA (la que se va a absorber), la línea de tiempo sigue en la rama BASE.
 
-## Fusionar ramas Fast-Forward
+### Fusionar ramas Fast-Forward
 ``` php
-(ramaBase) $ git merge nombreRamaFusionar
+(ramaBase)$ git merge nombreRamaFusionar
 ```
 
-## Fusion Manual Merge
+### Fusion Manual Merge
 ``` php
 (ramaBase)$ git merge nombreRamaFusionar
 Auto-merging readme.txt
@@ -334,7 +333,7 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 Esto sale porque en ambas ramas se estaba editando la misma línea del mismo fichero readme.txt por lo que genera un CONFLICTO.
 En el fichero readme.txt se agregan los conflictos, es decir, se agrega lo que se hizo en cada rama
-``` php
+```
 <<<<<<< HEAD
 Querido mundo
 =======
@@ -380,7 +379,7 @@ Applying: b
 * f113fb6 - (9 minutes ago) 1 - Carlos Rojas
 * 448f470 - (10 minutes ago) 0 - Iniciando proyecto 2 - Carlos Rojas
 
-// llevar master al último commit de ramarebase
+// Llevar master al último commit de ramarebase
 (ramarebase)$ git checkout master
 (master)$ git merge ramarebase
 
@@ -414,7 +413,7 @@ Sirve para comparar dos commits
 
 * Primero obtenemos los ID de cada commit.
 * Nos ubicamos en uno de los commits y ejecutamos:
-```
+``` php
 $git diff [ID de otro commit]
 ```
 
@@ -433,16 +432,16 @@ Por ejemplo, estás trabajando en el header de la web pero no has terminado (no 
 Con STASH guardas temporalmente lo cambiado en header para trabajar lo del footer y luego recuperas lo guardado.
 
 * Ejecutamos el comando donde estemos:
-```
+``` php
 $ git stash
 ```
 * Trabajamos en el otro cambio y hacemos un commit.
 * Listamos los stash creados.
-```
+``` php
 $ git stash list
 ```
 * Si es el último, aplicamos los cambios a los ficheros.
-```
+``` php
 $ git stash apply
 ```
 * Los cambios temporalmente guardados se aplican a los ficheros (WIP =Work In PRogress).
