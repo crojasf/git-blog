@@ -43,7 +43,246 @@
 				<!-- Two -->
 					<article id="two">
 						<span class="image fit"><img src="images/fulls/04.jpg" alt="" /></span>
-		                <p>Aquí va el contenido del post</p>
+                    
+<p>Profesor: Miguel Nieva | Twitter: <a href="https://twitter.com/mikenieva" target="_blank">@mikenieva</a> |
+<a href="http://git.miguelnieva.com/#/" target="_blank">Documentación del curso.</a></p>
+
+<h2>INTRODUCCION</h2>
+
+<p>Se realizará un ejercicio en el cual se crearán dos usuarios en Github y en GIT de local se configurarán ambos en la misma máquina, luego se harán Push y Pull Requests al Repositorio en Github, y por último se subirá el proyecto (Deploy) a AWS.</p>
+
+<h2>CREAR CLAVES SSH</h2>
+
+<p>Creamos una clave SSH para cada usuario, primero las cuentas reales de github</p>
+
+<pre><code>$ cd ~/.ssh
+
+$ ssh-keygen -t rsa -b 4096 -C "usuario1@dominio.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/.ssh/id_rsa): github- usuario1_rsa
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in github- usuario1-rsa.
+Your public key has been saved in github- usuario1-rsa.pub.
+The key fingerprint is:
+SHA256:+XCJAAApa//NzzVsdsdsdsdsdsdsdsdsdAZCilcE usuario1@dominio.com
+The key's randomart image is:
++---[RSA 4096]----+
+|**o+.            |
+|= ….           |
+|++.   .  .       |
+|=+.    ..o..  o  |
+|=o..    S+o  E   |
+|o...  . .++ o .  |
+|.  .. o. o.B +   |
+|    .o..o O o    |
+|   . o. .= .     |
++----[SHA256]-----+
+</code></pre>
+
+<p>Lo mismo con el segundo usuario, la clave la llamamos github-usuario1_rsa</p>
+
+<pre><code>$ ssh-keygen -t rsa -b 4096 -C "usuario2@dominio.com"
+.....
+</code></pre>
+
+<h2>ASOCIAR CLAVES A CUENTAS GITHUB</h2>
+
+<p>Dentro de Github agregamos para cada usuario sus respectivas llaves públicas para que ambas cuentas estén asociadas al mismo ordenador.</p>
+
+<h2>MULTIPLE USUARIO EN GIT LOCAL</h2>
+
+<p>Dentro de la carpeta donde se guardan las claves (.ssh por ejemplo) creamos un fichero llamado "config" (sin extensión) y dentro escribimos esto:</p>
+
+<pre><code># github Cuenta1
+Host cuenta1
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/claveCuenta1
+
+# github Cuenta2
+Host cuenta2
+   HostName github.com
+   User git
+   IdentityFile ~/.ssh/claveCuenta2
+</code></pre>
+
+<p>Si estamos utilizando el Bash de Git en Windows, hay que habilitar ssh-agent:</p>
+
+<pre><code>$ eval $(ssh-agent -s)
+$ ssh-add -D
+All identities removed.
+$ ssh-add claveCuenta1
+Identity added: claveCuenta1 (claveCuenta1)
+$ ssh-add claveCuenta2
+Identity added: claveCuenta2 (claveCuenta2)
+</code></pre>
+
+<p>Hacemos test de que funcionen las llaves</p>
+
+<pre><code>$ ssh -T cuenta1
+$ ssh -T cuenta2
+</code></pre>
+
+<p>NOTA: Si pregunta "Are you sure you want to continue connecting (yes/no)?" escribimos 'yes', solo lo hará una vez.</p>
+
+<p>Creamos un directorio para cada usuario.</p>
+
+<pre><code>cd ...../carpeta_proyecto/
+$ mkdir dirCuenta1
+$ mkdir dirCuenta2
+</code></pre>
+
+<h2>AGREGAR REPOSITORIOS A CADA DIRECTORIO</h2>
+
+<p>Agregamos los repositorios remotos en cada usuario y cada carpeta:</p>
+
+<h3>Usuario1</h3>
+
+<p>En teoría es nuestro usuario se siempre, por lo que no hay que configurar nada de nombre ni mail.
+Entramos a carpeta de cuenta1</p>
+
+<pre><code>$ cd ...../dirCuenta1
+</code></pre>
+
+<p>Iniciamos git</p>
+
+<pre><code>$ git init
+</code></pre>
+
+<p>Conectamos a remoto:
+IMPORTANTE: Traemos el repo remoto, <strong>pero en el SSH reemplazamos</strong> "github.com" por "cuenta1".</p>
+
+<pre><code>$ git remote add origin git@cuenta1:nombre-repositorio.git
+</code></pre>
+
+<p>Descargamos el repositorio remoto:</p>
+
+<pre><code>$ git pull origin master
+</code></pre>
+
+<h2>Usuario 2</h2>
+
+<p>En teoría es un usuario que hayamos creado de prueba para practicar, por lo que será la primera vez que utilicemos.</p>
+
+<p>Repetimos pasos de entrar a carpeta, iniciar git y de realizar la conexión de Cuenta1 pero con Cuenta2</p>
+
+<pre><code>$ cd ...../dirCuenta2
+$ git init
+$ git remote add origin git@cuenta2:nombre-repositorio.git
+</code></pre>
+
+<p>Antes de descargar algo, debemos configuramos el nombre y mail de la nueva cuenta2 (solo se hace una vez)</p>
+
+<pre><code>$ git config user.name "Nombre Cuenta2"
+$ git config user.email "mailCuenta2@cuenta2.com"
+</code></pre>
+
+<p>Descargamos el repositorio remoto:</p>
+
+<pre><code>$ git pull origin master
+</code></pre>
+
+<p>Ahora para el ejercicio solo basta con cambiar de carpeta en carpeta y automáticamente se cambia de usuario.</p>
+
+<h2>GIT FLOW</h2>
+
+<p>Básicamente consiste en tener disciplina de trabajo y seguir la regla de oro: </p>
+
+<p><strong>"ANTES DE HACER CUALQUIER COSA... HACER UN FETCH PARA BAJAR LO PENDIENTE"</strong></p>
+
+<p>Quiere decir, que antes de empezar a trabajar o de subir algún cambio realizado, debemos bajar todos lo posibles cambios realizados por algún compañero.</p>
+
+<h2>EJEMPLO DE FLOW CON RAMAS</h2>
+
+<h3>Cuando los usuarios son colaboradores</h3>
+
+<p>Básicamente es que, cuando hago fetch, me avisa que existen nuevas ramas para descargarlas primero.</p>
+
+<p>Luego entro a esa nueva rama descargada con "git checkout nombreRamaNueva" y hago un merge en local</p>
+
+<p>El trabajo de cada rama es independiente uno de otro, por ejemplo, la hacer push debo hacer uno en cada rama:</p>
+
+<pre><code>$ git checkout master
+(master)$ git fetch origin
+(master)$
+// Si no sale nada es que no hay nada pendiente, por lo que puedo hacer push tranquilamente
+(master)$ git push origin master
+
+// Luego hago lo mismo con la otra rama:
+(master)$ git checkout nuevaRama
+(nuevaRama)$ git fetch origin
+remote: Counting objects: 6, done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 3), reused 5 (delta 2), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From crojasf-test:nombre-de-repositorio
+   3eae2e9..68de2a5  master     -&gt; origin/master
+   5443f31..ecafd2f  responsivedesign -&gt; origin/responsivedesign
+
+// Indica que hubo cambios previos, entonces debo hacer un merge
+(responsivedesign)$ git merge origin/responsivedesign
+// Si todo OK, ahora sí puedo hacer push de lo que he estado trabajando.
+</code></pre>
+
+<h3>Cuando mi usuarios no es colaborador</h3>
+
+<p>Desde Github se debe hacer un FORK del repositorio principal a mi repositorio.</p>
+
+<p>Luego ese repositorio forked bajarlo a local.</p>
+
+<p>Recordar que ahora crea 2 repositorios espejos local ocultos: origin(mi fork) y upstream(principal), por lo que ahora las ramas estarán triplicadas: local, origin y upstream.</p>
+
+<p>Se hace igual que si yo fuera colaborador pero solo puedo hacer push al repositorio forked, y luego de Github se hace un pull request al repositorio principal.</p>
+
+<h4>Consola</h4>
+
+<p>Iniciamos</p>
+
+<pre><code>$ git init
+</code></pre>
+
+<p>Conexión origin (repo forked) y a upstream (repo principal)</p>
+
+<pre><code>(master)$ git remote add origin git@github.com:micuenta/nombre-repositorio.git
+(master)$ git remote add upstream git@github.com:cuenta-dueño-repo-principal/nombre-repositorio.git
+</code></pre>
+
+<p>Bajamos upstream y merge con master (pull lo hace en un paso)</p>
+
+<pre><code>(master)$ git pull upstream master
+</code></pre>
+
+<p>Trabajamos y realizamos una iteración básica (add + commit)</p>
+
+<p>Buscamos cambios en repo principal (upstream)</p>
+
+<pre><code>(master)$ git fetch upstream
+</code></pre>
+
+<p>Si no hay cambios OK, si hay cambios debo fusionar con master</p>
+
+<pre><code>(master)$ git merge upstream/master
+</code></pre>
+
+<p>Ahora ya puedo hacer push pero a mi origin (no puedo hacerlo a upstream)</p>
+
+<pre><code>(master)$ git push origin master
+</code></pre>
+
+<h4>Github</h4>
+
+<p>Con usuario2 (el colaborador) entramos al repositorio Forked y pulsamos botón "Pull request".</p>
+
+<p>Vemos que ramas vamos a comparar y pulsamos "Create pull request"</p>
+
+<p>Ponemos título y descripción, y pulsamos "create pull request"</p>
+
+<p>Con usuario1 (administrador) entramos al repositorio principal y en la pestaña "Pull request" aparecerán todos los pedidos.</p>
+
+<p>Entramos al Pull request solicitado y podemos rechazarlo o pulsar "Merge pull request" para fusionar esos cambios.</p>
+
+
 		                
                         <ul class="actions">
                                 <li><a href="index.html" class="button special small">Inicio</a></li>

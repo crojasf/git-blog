@@ -192,7 +192,7 @@ Se hace igual que si yo fuera colaborador pero solo puedo hacer push al reposito
 #### Consola
 Iniciamos
 ```
-$git ini
+$ git init
 ```
 
 Conexión origin (repo forked) y a upstream (repo principal)
